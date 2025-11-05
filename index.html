@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Інтерактивний тест — Франція та TotalEnergies</title>
+  <title>Інтерактивний тест — Німеччина та RWE</title>
   <style>
     :root { --bg:#0b0f19; --panel:#121829; --text:#e6e9f2; --muted:#9aa3b2; --brand:#6ea8fe; --brand-2:#22d3ee; --border:#1f2a44; }
     *{box-sizing:border-box}
@@ -62,15 +62,15 @@
     .warning{background:rgba(255,255,255,.03);border:1px dashed var(--border);padding:10px 12px;border-radius:12px;margin-top:10px;font-size:13px;color:var(--muted)}
     .actions{display:flex;gap:10px;align-items:center;margin:10px 0 0}
   </style>
+  <!-- Вход через Google по желанию -->
   <script src="https://accounts.google.com/gsi/client" async defer></script>
-  <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.2/Sortable.min.js"></script>
 </head>
 <body>
   <div class="wrap">
     <div class="card" id="app">
       <header>
         <div>
-          <h1>Інтерактивний тест</h1>
+          <h1>Інтерактивний тест — Німеччина та RWE</h1>
           <div class="muted">Вхід через Google або вкажіть робочу пошту. 20 хвилин на проходження. Перезапуск заборонено.</div>
           <div class="progress"><i id="bar"></i></div>
         </div>
@@ -80,6 +80,7 @@
                data-callback="handleCredentialResponse"
                data-auto_prompt="false"></div>
           <div class="g_id_signin" data-type="standard" data-size="medium" data-shape="pill" data-theme="outline" data-logo_alignment="left"></div>
+
           <div class="fld" id="manualEmail">
             <input id="emailInput" type="email" placeholder="ваша_пошта@company.com" />
             <button class="btn" id="startBtn">Старт</button>
@@ -102,48 +103,48 @@
   </div>
 
   <script>
-    // ====== НАЛАШТУВАННЯ ТЕСТУ (адаптовано під Францію та TotalEnergies) ======
+    // ====== НАЛАШТУВАННЯ ТЕСТУ (Німеччина × RWE) ======
     const QUIZ = {
-      title: "Тест про Францію та TotalEnergies (10 питань)",
+      title: "Тест про Німеччину та RWE (10 питань)",
       durationMin: 20,
-      // заміни за потреби своїм вебхуком (Google Apps Script / інше):
+      // заміни за потреби своїм вебхуком (Google Apps Script / інше)
       webhookUrl: "https://script.google.com/macros/s/AKfycbz0ZKCEcUj6tMBIvp33L0QFlZMZ8u4R4floJi9FiIwGYOABVLt7zuf_hu50UMYAgcOJ/exec",
 
-      // Ключ правильних відповідей (0-базові індекси) — 10 питань:
-      // 1: Макрон; 2: Габріель Атталь; 3: Патрік Пуянне; 4: 1924; 5: ~150 млрд €;
-      // 6: Париж; 7: 5 континентів; 8: Євронекст Париж; 9: Євро; 10: Париж.
+      // Ключ правильних відповідей (0-базові індекси)
+      // 1: Шольц; 2: Ессен; 3: Маркус Крєбер; 4: 16; 5: Федеративна республіка;
+      // 6: Північний Рейн-Вестфалія; 7: Франкфурт-на-Майні; 8: Цугшпітце; 9: 1990; 10: Машинобудування.
       answerKey: [0,0,0,0,0,0,0,0,0,0],
 
       questions: [
-        { type:'single', text:'Хто є чинним президентом Франції?', options:[
-          'Емманюель Макрон','Марін Ле Пен','Франсуа Олланд','Ніколя Саркозі'
+        { type:'single', text:'Хто є чинним федеральним канцлером Німеччини станом на 2025 рік?', options:[
+          'Олаф Шольц','Ангела Меркель','Крістіан Лінднер','Фрідріх Мерц'
         ]},
-        { type:'single', text:'Хто обіймає посаду прем’єр-міністра Франції станом на 2025 рік?', options:[
-          'Габріель Атталь','Елізабет Борн','Жан Кастекс','Мануель Вальс'
+        { type:'single', text:'Де розташована штаб-квартира енергетичної компанії RWE?', options:[
+          'Ессен','Берлін','Мюнхен','Франкфурт-на-Майні'
         ]},
-        { type:'single', text:'Хто є генеральним директором компанії TotalEnergies?', options:[
-          'Патрік Пуянне','Бернар Арно','Жан-Поль Агнон','Мішель Ландрі'
+        { type:'single', text:'Хто є генеральним директором німецької енергетичної компанії RWE?', options:[
+          'Маркус Крєбер','Крістіан Брабандт','Герберт Дісс','Йозеф Акерман'
         ]},
-        { type:'single', text:'У якому році була заснована компанія TotalEnergies (первісна Total)?', options:[
-          '1924','1945','1970','1983'
+        { type:'single', text:'Скільки федеральних земель входить до складу Німеччини?', options:[
+          '16','12','18','20'
         ]},
-        { type:'single', text:'Яка орієнтовна ринкова капіталізація компанії TotalEnergies у 2024 році?', options:[
-          'Близько 150 мільярдів євро','Близько 50 мільярдів євро','Близько 500 мільярдів євро','Менше 10 мільярдів євро'
+        { type:'single', text:'Яка форма державного устрою діє в Німеччині?', options:[
+          'Федеративна республіка','Конституційна монархія','Абсолютна монархія','Унітарна республіка'
         ]},
-        { type:'single', text:'Де розташована штаб-квартира компанії TotalEnergies?', options:[
-          'Париж','Ліон','Марсель','Брюссель'
+        { type:'single', text:'Яка найбільша за населенням федеральна земля Німеччини?', options:[
+          'Північний Рейн-Вестфалія','Баварія','Нижня Саксонія','Гессен'
         ]},
-        { type:'single', text:'На скільки континентах веде діяльність компанія TotalEnergies?', options:[
-          '5','3','2','1'
+        { type:'single', text:'Яке місто є головним фінансовим центром Німеччини?', options:[
+          'Франкфурт-на-Майні','Берлін','Штутгарт','Лейпциг'
         ]},
-        { type:'single', text:'На якій біржі котируються акції TotalEnergies?', options:[
-          'Євронекст Париж','Нью-Йоркська біржа','Лондонська біржа','Франкфуртська біржа'
+        { type:'single', text:'Яка найвища гора в Німеччині?', options:[
+          'Цугшпітце','Гросглокнер','Фельдберг','Вацман'
         ]},
-        { type:'single', text:'Яка є офіційна валюта Франції?', options:[
-          'Євро','Франк','Долар','Ліра'
+        { type:'single', text:'У якому році відбулося об’єднання Німеччини (Східної та Західної)?', options:[
+          '1990','1985','2001','1995'
         ]},
-        { type:'single', text:'Яке місто є столицею Франції?', options:[
-          'Париж','Марсель','Ліон','Бордо'
+        { type:'single', text:'Яка галузь є однією з ключових у економіці Німеччини?', options:[
+          'Машинобудування','Виробництво текстилю','Рибальство','Видобуток золота'
         ]}
       ]
     };
@@ -164,10 +165,16 @@
     let idx = 0;
     let answers = [];
 
-    // ====== Вхід ======
+    // ====== Вхід через Google (опціонально) ======
     window.handleCredentialResponse = function(res){
-      try { const payload = parseJwt(res.credential); const email = payload.email; if(!email) throw new Error(); lockAndStart(email); }
-      catch(e){ alert('Помилка входу через Google. Можна вказати пошту вручну.'); }
+      try {
+        const payload = parseJwt(res.credential);
+        const email = payload.email;
+        if(!email) throw new Error();
+        lockAndStart(email);
+      } catch(e){
+        alert('Помилка входу через Google. Можна вказати пошту вручну.');
+      }
     };
     function parseJwt (token) {
       const base64Url = token.split('.')[1];
@@ -176,12 +183,14 @@
       return JSON.parse(jsonPayload);
     }
 
+    // Ручний старт по e-mail
     startBtn.addEventListener('click', () => {
       const email = (emailInput.value||'').trim();
       if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) { alert('Укажіть коректну робочу пошту'); return; }
       lockAndStart(email);
     });
 
+    // Лок/старт та відновлення
     function lockAndStart(email){
       const existingEmail = localStorage.getItem(LS.email);
       const endTs = +localStorage.getItem(LS.end) || 0;
@@ -227,6 +236,7 @@
       }
     })();
 
+    // ====== Рендер ======
     function updateProgress(){
       const total = order.length;
       statusEl.textContent = `Питання ${Math.min(idx+1,total)} із ${total}`;
@@ -245,71 +255,38 @@
       const block = document.createElement('div');
       const h = document.createElement('h2'); h.className='q-title'; h.textContent = q.text; block.appendChild(h);
       const note = document.createElement('div'); note.className='q-note muted';
-      note.textContent =
-        q.type==='match' ? 'Перетягніть картки праворуч у відповідні слоти ліворуч' :
-        q.type==='order' ? 'Перетягніть пункти, щоб виставити порядок' :
-        q.type==='multiple' ? 'Можна обрати кілька варіантів' :
-        'Оберіть один варіант';
+      note.textContent = 'Оберіть один варіант';
       block.appendChild(note);
 
       const options = document.createElement('div'); options.className='options';
-
-      if(q.type==='single' || q.type==='multiple'){
-        const isMulti = q.type==='multiple';
-        q.options.forEach((opt,i)=>{
-          const label=document.createElement('label'); label.className='opt';
-          const input=document.createElement('input'); input.type=isMulti?'checkbox':'radio'; input.name='q'; input.value=i;
-          const span=document.createElement('span'); span.textContent=opt;
-          label.appendChild(input); label.appendChild(span); options.appendChild(label);
-        });
-      }
-      if(q.type==='order'){
-        const list = document.createElement('div'); list.id='orderList'; list.className='options';
-        q.items.forEach(txt=>{ const d=document.createElement('div'); d.className='draggable'; d.textContent=txt; list.appendChild(d); });
-        options.appendChild(list); new Sortable(list,{animation:150});
-      }
+      q.options.forEach((opt,i)=>{
+        const label=document.createElement('label'); label.className='opt';
+        const input=document.createElement('input'); input.type='radio'; input.name='q'; input.value=i;
+        const span=document.createElement('span'); span.textContent=opt;
+        label.appendChild(input); label.appendChild(span); options.appendChild(label);
+      });
 
       block.appendChild(options); stage.appendChild(block);
 
-      if(q.type==='single'){
-        options.addEventListener('change', ()=>{ nextBtn.disabled = !options.querySelector('input:checked'); });
-      } else if(q.type==='multiple'){
-        options.addEventListener('change', ()=>{ nextBtn.disabled = options.querySelectorAll('input:checked').length === 0; });
-      } else {
-        nextBtn.disabled = false;
-      }
-
-      nextBtn.onclick = () => saveAndNext(qOriginalIndex, q, options);
+      options.addEventListener('change', ()=>{ nextBtn.disabled = !options.querySelector('input:checked'); });
+      nextBtn.onclick = () => saveAndNext(qOriginalIndex, options);
       restartBtn.onclick = () => {};
     }
 
-    function saveAndNext(originalIndex, q, options){
-      let picked;
-      if(q.type==='single'){
-        const sel = options.querySelector('input:checked'); picked = sel ? [ +sel.value ] : [];
-      } else if(q.type==='multiple'){
-        picked = [...options.querySelectorAll('input:checked')].map(i=>+i.value);
-      } else if(q.type==='order'){
-        picked = Array.from(options.querySelectorAll('#orderList .draggable')).map(el=>el.textContent);
-      } else if(q.type==='match'){
-        picked = {}; options.querySelectorAll('.slot').forEach(slot=>{
-          const l=slot.getAttribute('data-left'); const it=slot.querySelector('.draggable');
-          picked[l] = it ? it.getAttribute('data-right') : '';
-        });
-      }
-
-      const record = { index: originalIndex, shownOrder: idx, type: q.type, picked };
+    function saveAndNext(originalIndex, options){
+      const sel = options.querySelector('input:checked');
+      const picked = sel ? [ +sel.value ] : [];
+      const record = { index: originalIndex, shownOrder: idx, type:'single', picked };
       answers[idx] = record;
       localStorage.setItem(LS.data, JSON.stringify(answers));
       idx++; localStorage.setItem(LS.idx, String(idx));
       render();
     }
 
+    // ====== Підсумок ======
     async function renderResult(){
       bar.style.width = '100%';
       const payload = buildPayload();
-
-      // 1) Локальна перевірка — показуємо результат одразу
       const local = localCheck(payload);
 
       stage.innerHTML = `
@@ -330,12 +307,11 @@
 
       const rows = document.getElementById('rows');
       local.breakdown.forEach((b,i)=>{ 
-        const tr=document.createElement('tr'); 
+        const tr=document.createElement('tr');
         tr.innerHTML=`<td>${i+1}</td><td>${b.id}</td><td>${b.ok?'<span class="pill ok">вірно</span>':'<span class="pill bad">помилка</span>'}</td>`;
-        rows.appendChild(tr); 
+        rows.appendChild(tr);
       });
 
-      // 2) Відправка на сервер (у фоні)
       const sendStatus = document.querySelector('#sendStatus .status');
       const trySend = async () => {
         sendStatus.className = 'status';
@@ -393,14 +369,6 @@
             valueIndex: pickedIndex, valueNumber1: pickedIndex==null?null:(pickedIndex+1),
             valueLetter: letter, valueText: text };
         }
-        if(rec.type==='multiple'){
-          const arr = rec.picked||[];
-          return { idByOriginal, idByOrder, type:'multiple',
-            valueIndexes: arr, valueNumbers1: arr.map(i=>i+1),
-            valueLetters: arr.map(i=>alpha[i]), valueTexts: arr.map(i=>q.options[i]||'') };
-        }
-        if(rec.type==='order'){ return { idByOriginal, idByOrder, type:'order', value:rec.picked }; }
-        if(rec.type==='match'){ return { idByOriginal, idByOrder, type:'match', value:rec.picked }; }
         return { idByOriginal, idByOrder, type:rec.type, value:rec.picked };
       });
 
@@ -436,6 +404,7 @@
       return { total, percent, breakdown };
     }
 
+    // ====== Таймер ======
     function tickTimer(){
       const end = +localStorage.getItem(LS.end) || 0;
       if(!end) return;
