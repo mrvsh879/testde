@@ -2,7 +2,7 @@
 <html lang="uk">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Інтерактивний тест — Німеччина та RWE</title>
   <style>
     :root { --bg:#0b0f19; --panel:#121829; --text:#e6e9f2; --muted:#9aa3b2; --brand:#6ea8fe; --brand-2:#22d3ee; --border:#1f2a44; }
@@ -26,8 +26,8 @@
       box-shadow:0 12px 40px rgba(0,0,0,.35);
       overflow:hidden
     }
-    header{padding:22px 22px 10px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:16px;flex-wrap:wrap}
-    h1{font-size:22px;margin:0;letter-spacing:.2px}
+    header{padding:22px 22px 10px;border-bottom:1px solid var(--border);display:flex;gap:16px;flex-wrap:wrap;align-items:center}
+    h1{font-size:22px;margin:0}
     .muted{color:var(--muted);font-size:14px}
     .progress{width:100%;height:8px;background:#0e1526;border:1px solid var(--border);border-radius:999px;overflow:hidden;margin:8px 0 0}
     .progress>i{display:block;height:100%;width:0%;background:linear-gradient(90deg,var(--brand),var(--brand-2))}
@@ -37,11 +37,7 @@
     .options{display:grid;gap:12px}
     .opt{border:1px solid var(--border);border-radius:14px;padding:14px;background:#0e1526;display:flex;align-items:center;gap:12px}
     .opt input{width:18px;height:18px;accent-color:var(--brand)}
-    .btn{
-      appearance:none;border:1px solid var(--border);color:var(--text);
-      background:linear-gradient(180deg,#1a2340,#15203b);
-      padding:12px 16px;border-radius:12px;cursor:pointer;font-weight:600;transition:opacity .2s ease
-    }
+    .btn{appearance:none;border:1px solid var(--border);color:var(--text);background:linear-gradient(180deg,#1a2340,#15203b);padding:12px 16px;border-radius:12px;cursor:pointer;font-weight:600;transition:opacity .2s}
     .btn[disabled]{opacity:.6;cursor:not-allowed}
     .footer{padding:16px 22px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;color:var(--muted)}
     .hidden{display:none !important}
@@ -53,16 +49,13 @@
     .pill{display:inline-block;padding:2px 8px;border-radius:999px;font-size:12px}
     .pill.ok{background:rgba(34,197,94,.15);color:#86efac}
     .pill.bad{background:rgba(239,68,68,.15);color:#fca5a5}
-    .status{margin-left:12px;padding:4px 10px;border-radius:999px;border:1px solid var(--border);background:#0e1526;font-size:12px}
-    .status.ok{color:#86efac;border-color:rgba(34,197,94,.35)}
-    .status.err{color:#fca5a5;border-color:rgba(239,68,68,.35)}
     .timer{margin-left:auto;font-weight:700}
     .email-badge{margin-left:auto;background:#0e1526;border:1px solid var(--border);padding:6px 10px;border-radius:999px;font-size:12px}
     .signin-wrap{display:flex;align-items:center;gap:12px}
     .warning{background:rgba(255,255,255,.03);border:1px dashed var(--border);padding:10px 12px;border-radius:12px;margin-top:10px;font-size:13px;color:var(--muted)}
     .actions{display:flex;gap:10px;align-items:center;margin:10px 0 0}
   </style>
-  <!-- Вход через Google по желанию -->
+  <!-- Google Sign-In (опционально) -->
   <script src="https://accounts.google.com/gsi/client" async defer></script>
 </head>
 <body>
@@ -80,7 +73,6 @@
                data-callback="handleCredentialResponse"
                data-auto_prompt="false"></div>
           <div class="g_id_signin" data-type="standard" data-size="medium" data-shape="pill" data-theme="outline" data-logo_alignment="left"></div>
-
           <div class="fld" id="manualEmail">
             <input id="emailInput" type="email" placeholder="ваша_пошта@company.com" />
             <button class="btn" id="startBtn">Старт</button>
@@ -103,27 +95,23 @@
   </div>
 
   <script>
-    // ====== НАЛАШТУВАННЯ ТЕСТУ (Німеччина × RWE) ======
+    // ===== НАЛАШТУВАННЯ (Німеччина × RWE) =====
     const QUIZ = {
       title: "Тест про Німеччину та RWE (10 питань)",
       durationMin: 20,
-      // заміни за потреби своїм вебхуком (Google Apps Script / інше)
-      webhookUrl: "https://script.google.com/macros/s/AKfycbz0ZKCEcUj6tMBIvp33L0QFlZMZ8u4R4floJi9FiIwGYOABVLt7zuf_hu50UMYAgcOJ/exec",
-
-      // Ключ правильних відповідей (0-базові індекси)
-      // 1: Шольц; 2: Ессен; 3: Маркус Крєбер; 4: 16; 5: Федеративна республіка;
-      // 6: Північний Рейн-Вестфалія; 7: Франкфурт-на-Майні; 8: Цугшпітце; 9: 1990; 10: Машинобудування.
+      // поставь сюда свой вебхук (Google Apps Script / др.) — можно оставить пустым, тогда отправка отключена
+      webhookUrl: "",
+      // правильный вариант в каждом вопросе — ПЕРВЫЙ (индекс 0)
       answerKey: [0,0,0,0,0,0,0,0,0,0],
-
       questions: [
         { type:'single', text:'Хто є чинним федеральним канцлером Німеччини станом на 2025 рік?', options:[
-          'Олаф Шольц','Ангела Меркель','Крістіан Лінднер','Фрідріх Мерц'
+          'Фрідріх Мерц','Олаф Шольц','Крістіан Лінднер','Анналена Бербок'
         ]},
         { type:'single', text:'Де розташована штаб-квартира енергетичної компанії RWE?', options:[
           'Ессен','Берлін','Мюнхен','Франкфурт-на-Майні'
         ]},
-        { type:'single', text:'Хто є генеральним директором німецької енергетичної компанії RWE?', options:[
-          'Маркус Крєбер','Крістіан Брабандт','Герберт Дісс','Йозеф Акерман'
+        { type:'single', text:'Хто є генеральним директором RWE AG?', options:[
+          'Маркус Крєбер','Райнер Зеле','Крістіан Брабандт','Йозеф Акерман'
         ]},
         { type:'single', text:'Скільки федеральних земель входить до складу Німеччини?', options:[
           '16','12','18','20'
@@ -149,7 +137,7 @@
       ]
     };
 
-    // ====== Глобал/DOM ======
+    // ===== DOM-посилання =====
     const stage = document.getElementById('stage');
     const nextBtn = document.getElementById('nextBtn');
     const restartBtn = document.getElementById('restartBtn');
@@ -165,7 +153,7 @@
     let idx = 0;
     let answers = [];
 
-    // ====== Вхід через Google (опціонально) ======
+    // ===== Google Sign-In (опціонально) =====
     window.handleCredentialResponse = function(res){
       try {
         const payload = parseJwt(res.credential);
@@ -183,14 +171,14 @@
       return JSON.parse(jsonPayload);
     }
 
-    // Ручний старт по e-mail
-    startBtn.addEventListener('click', () => {
+    // ===== Ручний старт через email =====
+    startBtn?.addEventListener('click', () => {
       const email = (emailInput.value||'').trim();
       if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) { alert('Укажіть коректну робочу пошту'); return; }
       lockAndStart(email);
     });
 
-    // Лок/старт та відновлення
+    // ===== Старт / відновлення =====
     function lockAndStart(email){
       const existingEmail = localStorage.getItem(LS.email);
       const endTs = +localStorage.getItem(LS.end) || 0;
@@ -236,7 +224,7 @@
       }
     })();
 
-    // ====== Рендер ======
+    // ===== Рендер питань =====
     function updateProgress(){
       const total = order.length;
       statusEl.textContent = `Питання ${Math.min(idx+1,total)} із ${total}`;
@@ -254,9 +242,7 @@
 
       const block = document.createElement('div');
       const h = document.createElement('h2'); h.className='q-title'; h.textContent = q.text; block.appendChild(h);
-      const note = document.createElement('div'); note.className='q-note muted';
-      note.textContent = 'Оберіть один варіант';
-      block.appendChild(note);
+      const note = document.createElement('div'); note.className='q-note muted'; note.textContent = 'Оберіть один варіант'; block.appendChild(note);
 
       const options = document.createElement('div'); options.className='options';
       q.options.forEach((opt,i)=>{
@@ -283,7 +269,7 @@
       render();
     }
 
-    // ====== Підсумок ======
+    // ===== Підсумок (з опц. відправкою на вебхук) =====
     async function renderResult(){
       bar.style.width = '100%';
       const payload = buildPayload();
@@ -296,7 +282,7 @@
           <div class="kpi"><b id="pct">${local.percent}%</b><div class="muted">Відсоток</div></div>
           <div class="kpi"><b>${timeTaken()}</b><div class="muted">Час</div></div>
         </div>
-        <div class="actions">
+        <div class="actions ${QUIZ.webhookUrl ? '' : 'hidden'}">
           <div class="muted" id="sendStatus"><span class="status">Надсилання…</span></div>
           <button class="btn" id="retryBtn">Повторити відправку</button>
         </div>
@@ -312,25 +298,27 @@
         rows.appendChild(tr);
       });
 
-      const sendStatus = document.querySelector('#sendStatus .status');
-      const trySend = async () => {
-        sendStatus.className = 'status';
-        sendStatus.textContent = 'Надсилання…';
-        try {
-          const data = await sendToWebhook(payload);
-          sendStatus.classList.add('ok');
-          sendStatus.textContent = 'Надіслано організатору';
-          if(typeof data?.total === 'number' && typeof data?.percent === 'number'){
-            document.getElementById('score').textContent = `${data.total}/${QUIZ.questions.length}`;
-            document.getElementById('pct').textContent = `${data.percent}%`;
+      if(QUIZ.webhookUrl){
+        const sendStatus = document.querySelector('#sendStatus .status');
+        const trySend = async () => {
+          sendStatus.className = 'status';
+          sendStatus.textContent = 'Надсилання…';
+          try {
+            const data = await sendToWebhook(payload);
+            sendStatus.classList.add('ok');
+            sendStatus.textContent = 'Надіслано організатору';
+            if(typeof data?.total === 'number' && typeof data?.percent === 'number'){
+              document.getElementById('score').textContent = `${data.total}/${QUIZ.questions.length}`;
+              document.getElementById('pct').textContent = `${data.percent}%`;
+            }
+          } catch (e) {
+            sendStatus.classList.add('err');
+            sendStatus.textContent = 'Не надіслано (офлайн/помилка).';
           }
-        } catch (e) {
-          sendStatus.classList.add('err');
-          sendStatus.textContent = 'Не надіслано (офлайн/помилка).';
-        }
-      };
-      document.getElementById('retryBtn').onclick = trySend;
-      trySend();
+        };
+        document.getElementById('retryBtn').onclick = trySend;
+        trySend();
+      }
     }
 
     async function sendToWebhook(payload){
@@ -348,7 +336,7 @@
     }
 
     function buildPayload(){
-      const email = localStorage.getItem(LS.email);
+      const email = localStorage.getItem(LS.email) || '';
       const startedAt = +localStorage.getItem(LS.start) || Date.now();
       const finishedAt = Date.now();
       const alpha = ['a','b','c','d','e','f'];
@@ -361,15 +349,12 @@
         const q = QUIZ.questions[rec.index];
         const idByOriginal = `q${rec.index+1}`;
         const idByOrder = `q${shownOrder+1}`;
-        if(rec.type==='single'){
-          const pickedIndex = rec.picked && rec.picked.length ? rec.picked[0] : null;
-          const letter = (pickedIndex==null) ? '' : alpha[pickedIndex] ?? '';
-          const text = (pickedIndex==null) ? '' : (q.options[pickedIndex] ?? '');
-          return { idByOriginal, idByOrder, type:'single',
-            valueIndex: pickedIndex, valueNumber1: pickedIndex==null?null:(pickedIndex+1),
-            valueLetter: letter, valueText: text };
-        }
-        return { idByOriginal, idByOrder, type:rec.type, value:rec.picked };
+        const pickedIndex = rec.picked && rec.picked.length ? rec.picked[0] : null;
+        const letter = (pickedIndex==null) ? '' : alpha[pickedIndex] ?? '';
+        const text = (pickedIndex==null) ? '' : (q.options[pickedIndex] ?? '');
+        return { idByOriginal, idByOrder, type:'single',
+          valueIndex: pickedIndex, valueNumber1: pickedIndex==null?null:(pickedIndex+1),
+          valueLetter: letter, valueText: text };
       });
 
       return {
@@ -387,12 +372,11 @@
       };
     }
 
-    // Локальна перевірка (по QUIZ.answerKey)
+    // локальна перевірка за answerKey
     function localCheck(payload){
       const key = QUIZ.answerKey;
       let ok = 0;
       const breakdown = payload.answers.map(a=>{
-        if(a.type!=='single'){ return { id: a.idByOriginal, ok:true }; }
         const original = parseInt(a.idByOriginal.slice(1),10)-1;
         const correctIndex = key[original];
         const isOk = (a.valueIndex === correctIndex);
@@ -404,7 +388,7 @@
       return { total, percent, breakdown };
     }
 
-    // ====== Таймер ======
+    // ===== Таймер =====
     function tickTimer(){
       const end = +localStorage.getItem(LS.end) || 0;
       if(!end) return;
